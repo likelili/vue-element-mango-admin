@@ -1,5 +1,5 @@
 # vue-element-mango-admin
-
+https://github.com/likelili/vue-element-mango-admin.git
 ## Project setup
 ```
 npm install
