@@ -14,13 +14,13 @@
 					active-text-color="#ffd04b"
 				>
 					<el-menu-item v-for="(item, index) in tarBar.list" :key="index" :index="index | numToString">{{ item.name }}</el-menu-item>
-					<el-submenu index="5">
+					<el-submenu index="100">
 						<template slot="title">
 							<el-avatar size="small" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
 							ADMIN
 						</template>
-						<el-menu-item index="5-1">修改</el-menu-item>
-						<el-menu-item index="5-2">登出</el-menu-item>
+						<el-menu-item index="100-1">修改</el-menu-item>
+						<el-menu-item index="100-2">登出</el-menu-item>
 					</el-submenu>
 				</el-menu>
 			</el-header>
@@ -29,13 +29,13 @@
 				<el-aside width="200px">
 					<el-menu :default-active="getAsideActive | numToString" @select="asideSelect">
 						<el-menu-item v-for="(item, index) in getActiveAside" :key="index" :index="index | numToString">
-							<i class="el-icon-menu"></i>
+							<i :class="item.icon"></i>
 							<span slot="title">{{ item.name }}</span>
 						</el-menu-item>
 					</el-menu>
 				</el-aside>
 				<!---->
-				<el-main>
+				<el-main style="padding-bottom: 60px;position: relative;">
 					<!--面包屑导航-->
 					<div class="border-bottom mb-3 bg-white" style="padding: 20px;margin: -20px;" v-if="bran.length > 0">
 						<el-breadcrumb separator-class="el-icon-arrow-right">
@@ -44,7 +44,7 @@
 					</div>
 
 					<router-view></router-view>
-					<div style="height: 1000px;"></div>
+					
 					<el-backtop target=".el-main" :bottom="100">
 						<div style="height: 100%;width: 100%;background-color: #f2f5f6;
 						box-shadow: 0 0 6px rgba(0,0,0, .12);text-align: center;
@@ -52,6 +52,8 @@
 						UP
 						</div>
 					</el-backtop>
+					
+					<div style="height: 60px;"></div>
 				</el-main>
 			</el-container>
 		</el-container>
@@ -73,12 +75,17 @@ export default {
 						asideActive: 0,
 						aside: [
 							{
-								icon: '',
+								icon: 'el-icon-s-home',
 								name: '后台首页',
 								pathname: 'index'
 							},
 							{
-								icon: '',
+								icon: 'el-icon-picture',
+								name: '相册管理',
+								pathname: 'image'
+							},
+							{
+								icon: 'el-icon-s-claim',
 								name: '商品列表',
 								pathname: 'shop_goods_list'
 							}
@@ -90,11 +97,13 @@ export default {
 						aside: [
 							{
 								icon: '',
-								name: '后台首页'
+								name: '后台首页',
+								pathname: 'index'
 							},
 							{
 								icon: '',
-								name: '商品列表'
+								name: '商品列表',
+								pathname: 'shop_goods_list'
 							}
 						]
 					},
@@ -145,7 +154,14 @@ export default {
 			this.tarBar.list[this.tarBar.active].asideActive = index;
 		},
 		headerSelect(key) {
+			
 			//console.log(key,keyPath)
+			if (key === '100-1') {
+				return console.log('100-1')
+			}
+			if (key === '100-2') {
+				return console.log('100-2')
+			}
 			this.tarBar.active = key;
 			//默认跳转到激活的那一个
 			if (this.getActiveAside.length > 0) {
@@ -191,7 +207,9 @@ export default {
 				//console.log(r)
 				this.tarBar.active = r.top;
 				this.setAsideActive(r.left);
+				//console.log(r)
 			}
+			
 		}
 	},
 	created() {
@@ -201,15 +219,16 @@ export default {
 		this.__initTarBar();
 	},
 	watch: {
-		$route() {
+		'$route'() {
 			localStorage.setItem(
 				'tarActive',
 				JSON.stringify({
 					top: this.tarBar.active,
 					left: this.getAsideActive
 				})
-			);
-			this.getRouterBran();
+				
+			);this.getRouterBran();
+			
 		}
 	}
 };
