@@ -83,11 +83,6 @@ export default {
 								icon: 'el-icon-picture',
 								name: '相册管理',
 								pathname: 'image'
-							},
-							{
-								icon: 'el-icon-s-claim',
-								name: '商品列表',
-								pathname: 'shop_goods_list'
 							}
 						]
 					},
@@ -95,11 +90,6 @@ export default {
 						name: '商品',
 						asideActive: 0,
 						aside: [
-							{
-								icon: '',
-								name: '后台首页',
-								pathname: 'index'
-							},
 							{
 								icon: '',
 								name: '商品列表',
