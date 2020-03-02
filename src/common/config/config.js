@@ -1,3 +1,4 @@
 export default {
-	logo:'ADMIN'
+	logo:'ADMIN',
+	maxChoosedNum:9
 }

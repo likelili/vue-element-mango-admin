@@ -94,6 +94,11 @@ export default {
 								icon: '',
 								name: '商品列表',
 								pathname: 'shop_goods_list'
+							},
+							{
+								icon: '',
+								name: '创建商品',
+								pathname: 'shop_goods_create'
 							}
 						]
 					},

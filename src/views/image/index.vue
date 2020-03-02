@@ -52,12 +52,8 @@
 										style="position: absolute;right: 0;top: 0;z-index: 100;" v-if="item.isChoosed">
 										{{item.choosedOrder}}
 										</span>
-										<el-image
-											style="width: 100%; height: 100px"
-											:src="item.src"
-											fit="cover" lazy 
-											@click="chooseImage(item,index)">
-										</el-image>
+										<img :src="item.src" class="w-100" style="height: 100px"
+										@click="chooseImage(item,index)"/>
 										<div class="w-100 text-white position-absolute px-1" style="background: rgba(0,0,0,0.5);margin-top:-30px;">
 											<span class="small">{{item.name}}</span>
 										</div>

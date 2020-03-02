@@ -5,8 +5,10 @@
 				
 				<button-search placeholder="要搜索的商品名称" ref="buttonSearch" @search="searchEvent">
 					<template #left>
-						<el-button type="success" size="mini">发布商品</el-button>
-						<el-button type="danger" size="mini">批量删除</el-button>
+						<router-link :to="{name:'shop_goods_create'}">
+							<el-button type="success" size="mini">创建商品</el-button>
+						</router-link>
+						<el-button type="danger" size="mini" class="ml-2">批量删除</el-button>
 					</template>
 					
 					<template #searchForm>

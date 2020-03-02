@@ -1,19 +1,38 @@
 <template>
 	<div id="app">
 		<router-view></router-view>
+		
+		<image-dialog ref="imageDialog" :maxChoosedNum="maxChoosedNum"></image-dialog>
 	</div>
 </template>
 
 <script>
+import imageDialog from '@/components/image/image-dialog.vue';
 export default {
 	name: 'app',
 	components: {
+		imageDialog
 	},
+	provide(){
+		return {
+			app:this
+		}
+	},
+	data(){
+		return {
+			maxChoosedNum:0
+		}
+	},
+	methods:{
+		showImageModel(maxChoosedNum,callback){
+			this.maxChoosedNum = maxChoosedNum
+			this.$refs.imageDialog.showImageModel(callback)
+		}
+	}
 }
 </script>
 
 <style>
-	/*滚动条样式*/	
 	::-webkit-scrollbar-track
 	{
 		background: rgba(0,0,0,.1);
