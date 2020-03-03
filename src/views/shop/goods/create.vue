@@ -81,7 +81,7 @@
 					</el-collapse>
 				</el-tab-pane>
 				<el-tab-pane label="商品详情">
-					<tinymce></tinymce>
+					<tinymce v-model="form.content"></tinymce>
 				</el-tab-pane>
 			</el-tabs>
 		</div>

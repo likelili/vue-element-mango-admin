@@ -7,6 +7,7 @@ export default{
 			price:0.00,
 			order:0,
 			cover:'',
+			content:'hahaha',
 			banners:[/*{
 				id:'1',
 				src:"https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"

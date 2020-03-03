@@ -80,6 +80,11 @@ export default {
 								pathname: 'index'
 							},
 							{
+								icon: 'el-icon-s-home',
+								name: '前台管理',
+								pathname: 'index_common'
+							},
+							{
 								icon: 'el-icon-picture',
 								name: '相册管理',
 								pathname: 'image'
@@ -94,6 +99,11 @@ export default {
 								icon: '',
 								name: '商品列表',
 								pathname: 'shop_goods_list'
+							},
+							{
+								icon: '',
+								name: '分类管理',
+								pathname: 'shop_goods_category'
 							},
 							{
 								icon: '',
