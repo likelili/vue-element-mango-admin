@@ -64,6 +64,11 @@
 import common from '@/common/mixins/common.js';
 export default {
 	mixins: [common],
+	provide(){
+		return {
+			layout:this
+		}
+	},
 	data() {
 		return {
 			bran: [],
@@ -109,6 +114,11 @@ export default {
 								icon: '',
 								name: '创建商品',
 								pathname: 'shop_goods_create'
+							},
+							{
+								icon: '',
+								name: '评论管理',
+								pathname: 'shop_comment_list'
 							}
 						]
 					},

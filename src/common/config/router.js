@@ -38,6 +38,10 @@ let routes = [
 			{
 				meta:{title:'分类管理'},
 				component:'shop/goods/category'
+			},
+			{
+				meta:{title:'评论管理'},
+				component:'shop/comment/list'
 			}
 		]
 	},
