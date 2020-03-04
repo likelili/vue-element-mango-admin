@@ -50,7 +50,8 @@
 								<el-button v-if="!scope.row.extra && !textareaEdit" class="ml-auto" type="info" size="mini" @click="textareaEdit = true">回复</el-button>
 							</h6>
 							{{ scope.row.review.data }}
-							<div class="py-2"><img v-for="(item, index) in scope.row.review.image" :key="index" :src="item" style="max-width: 100px;max-height: 100px;" /></div>
+							<div class="py-2"><img v-for="(item, index) in scope.row.review.image" :key="index" :src="item" 
+							style="max-width: 100px;max-height: 100px;" /></div>
 
 							<div v-if="textareaEdit">
 								<el-input type="textarea" :rows="2" placeholder="请输入评价内容" v-model="textarea"></el-input>
@@ -134,7 +135,13 @@ export default {
 					},
 					rating:5,
 					create_time:'123444',
-					status:1
+					status:1,
+					extra:{
+						
+					},
+					review:{
+						
+					}
 				}
 			],
 			form: {

@@ -42,6 +42,38 @@ let routes = [
 			{
 				meta:{title:'评论管理'},
 				component:'shop/comment/list'
+			},
+			{
+				meta:{title:'订单管理'},
+				component:'order/order/list'
+			},
+			{
+				meta:{title:'发票管理'},
+				component:'order/invoice/list'
+			},
+			{
+				meta:{title:'售后服务'},
+				component:'order/after-sale/list'
+			},
+			{
+				meta:{title:'用户管理'},
+				component:'user/user/list'
+			},
+			{
+				meta:{title:'等级管理'},
+				component:'user/user-level/list'
+			},
+			{
+				meta:{title:'基础设置'},
+				component:'set/base/index'
+			},
+			{
+				meta:{title:'管理员管理'},
+				component:'set/manager/index'
+			},
+			{
+				meta:{title:'支付管理'},
+				component:'set/payment/index'
 			}
 		]
 	},

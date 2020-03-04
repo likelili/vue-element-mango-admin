@@ -128,11 +128,34 @@ export default {
 						aside: [
 							{
 								icon: '',
-								name: '后台首页'
+								name: '订单管理',
+								pathname: 'order_order_list'
 							},
 							{
 								icon: '',
-								name: '商品列表'
+								name: '发票管理',
+								pathname: 'order_invoice_list'
+							},
+							{
+								icon: '',
+								name: '售后服务',
+								pathname: 'order_after-sale_list'
+							}
+						]
+					},
+					{
+						name: '用户',
+						asideActive: 0,
+						aside: [
+							{
+								icon: '',
+								name: '用户管理',
+								pathname: 'user_user_list'
+							},
+							{
+								icon: '',
+								name: '等级管理',
+								pathname: 'user_user-level_list'
 							}
 						]
 					},
@@ -142,11 +165,18 @@ export default {
 						aside: [
 							{
 								icon: '',
-								name: '后台首页'
+								name: '等级管理',
+								pathname: 'set_base'
 							},
 							{
 								icon: '',
-								name: '商品列表'
+								name: '管理员管理',
+								pathname: 'set_manager'
+							},
+							{
+								icon: '',
+								name: '支付管理',
+								pathname: 'set_payment'
 							}
 						]
 					}
