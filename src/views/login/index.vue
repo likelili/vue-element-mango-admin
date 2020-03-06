@@ -1,7 +1,5 @@
 <template>
-	
 	<div>
-		
 		<div class="container">
 			<div class="row">
 				<div class="col-12 col-lg-4 col-md-6 col-sm-8 m-auto mt-5"
@@ -22,7 +20,8 @@
 								</el-form-item>
 								<el-form-item>
 									<el-button type="primary" size="medium" class="w-100"
-									@click="submit">立即登录</el-button>
+									@click="submit" 
+									:loading="loading">{{loading?'登入中':'立即登录'}</el-button>
 								</el-form-item>
 							</el-form>
 						</div>
@@ -30,7 +29,6 @@
 				</div>
 			</div>
 		</div>
-		
 	</div>
 </template>
 
@@ -38,6 +36,7 @@
 	export default {
 		data() {
 			return {
+				loading:false,
 				form:{
 					username:'',
 					password:''
@@ -59,10 +58,18 @@
 		methods:{
 			submit() {
 				this.$refs.form.validate((e)=>{
-					//console.log(e)
 					if(!e) return;
-					
-					this.$router.push({name:'index'})
+					this.loading = true
+					this.axios.post('/admin/user/admin/login',this.form).then(res=>{
+						if (res.data && res.data.data) {
+							this.$store.commit('login',res.data.data)
+							this.loading = false
+							this.$router.push({name:'index'})
+						}
+					}).catch(err=>{
+						//console.log(err.response.data)
+						this.loading = false
+					})
 				})
 			}
 		}

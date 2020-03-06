@@ -16,8 +16,8 @@
 					<el-menu-item v-for="(item, index) in tarBar.list" :key="index" :index="index | numToString">{{ item.name }}</el-menu-item>
 					<el-submenu index="100">
 						<template slot="title">
-							<el-avatar size="small" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-							ADMIN
+							<el-avatar size="small" :src="user.avatar ? user.avatar : ''"></el-avatar>
+							{{user.username}}
 						</template>
 						<el-menu-item index="100-1">修改</el-menu-item>
 						<el-menu-item index="100-2">登出</el-menu-item>
@@ -62,6 +62,7 @@
 
 <script>
 import common from '@/common/mixins/common.js';
+import { mapState } from 'vuex'
 export default {
 	mixins: [common],
 	provide(){
@@ -185,6 +186,9 @@ export default {
 		};
 	},
 	computed: {
+		...mapState({
+			user:state=>state.user.user
+		}),
 		//得到当前侧边栏激活
 		getAsideActive() {
 			//asideSelect(key)
@@ -205,7 +209,7 @@ export default {
 				return console.log('100-1')
 			}
 			if (key === '100-2') {
-				return console.log('100-2')
+				this.logout()
 			}
 			this.tarBar.active = key;
 			//默认跳转到激活的那一个
@@ -216,6 +220,21 @@ export default {
 				});
 			}
 		},
+		logout(){
+			this.axios.post('/admin/user/admin/logout',{},{
+					headers: {
+						token:this.user.token
+					}
+				}).then(res=>{
+					this.$store.commit('logout')
+					this.$router.push({name:"login"})
+				}).catch(err=>{
+					this.$store.commit('logout')
+					this.$router.push({name:"login"})
+				})
+			
+		},
+		
 		asideSelect(key) {
 			this.tarBar.list[this.tarBar.active].asideActive = key;
 			//跳转到指定页面

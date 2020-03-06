@@ -23,6 +23,9 @@ export default {
 			maxChoosedNum:0
 		}
 	},
+	created() {
+		this.$store.commit('initUser')
+	},
 	methods:{
 		showImageModel(maxChoosedNum,callback){
 			this.maxChoosedNum = maxChoosedNum
