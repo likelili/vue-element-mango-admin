@@ -35,7 +35,8 @@
 					</el-menu>
 				</el-aside>
 				<!---->
-				<el-main style="padding-bottom: 60px;position: relative;">
+				<el-main style="padding-bottom: 60px;position: relative;"
+				v-loading="loading">
 					<!--面包屑导航-->
 					<div class="border-bottom mb-3 bg-white" style="padding: 20px;margin: -20px;" v-if="bran.length > 0">
 						<el-breadcrumb separator-class="el-icon-arrow-right">
@@ -73,6 +74,7 @@ export default {
 	data() {
 		return {
 			bran: [],
+			loading:false,
 			tarBar: {
 				active: 0,
 				list: [
@@ -199,6 +201,13 @@ export default {
 		}
 	},
 	methods: {
+		showLoading(){
+			this.loading = true
+		},
+		hideLoading(){
+			this.loading = false
+		}
+		,
 		setAsideActive(index) {
 			this.tarBar.list[this.tarBar.active].asideActive = index;
 		},

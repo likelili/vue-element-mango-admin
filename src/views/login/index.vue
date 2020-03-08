@@ -21,7 +21,9 @@
 								<el-form-item>
 									<el-button type="primary" size="medium" class="w-100"
 									@click="submit" 
-									:loading="loading">{{loading?'登入中':'立即登录'}</el-button>
+									:loading="loading"> 
+									{{loading? '登录中' : '立即登录'}}
+									</el-button>
 								</el-form-item>
 							</el-form>
 						</div>
