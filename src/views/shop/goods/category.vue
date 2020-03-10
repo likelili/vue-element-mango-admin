@@ -3,32 +3,52 @@
 		<button-search class="pt-3" :showSearch="false">
 			<template #left>
 				<el-button size="mini" type="success" @click="openModel(false)">添加类型</el-button>
+				<el-button size="mini" type="danger" @click="deleteAll()">批量删除</el-button>
 			</template>
 			<template #right><div></div></template>
 		</button-search>
 
-		<el-table border class="mt-3" :data="categories" style="width: 100%">
+		<el-table border class="mt-3" :data="tableData" style="width: 100%"
+		@selection-change="handleSelectionChange">
+			<el-table-column type="selection" width="45" align="center"></el-table-column>
 			<el-table-column label="类型名称" prop="name"></el-table-column>
-			<el-table-column align="center" prop="order" label="排序"></el-table-column>
+			<el-table-column align="center" prop="sort" label="排序"></el-table-column>
+			<el-table-column label="商品数" prop="num"></el-table-column>
 			<el-table-column prop="status" align="center" label="状态">
 				<template slot-scope="scope">
 					<el-button :type="scope.row.status ? 'success' : 'danger'" size="mini" @click="changeStatus(scope.row)" plain>
-						{{scope.row.status ? '启用' : '禁用' }}
+						{{scope.row.status}}
 					</el-button>
 				</template>
 			</el-table-column>
 			<el-table-column align="center" label="操作" width="150">
 				<template slot-scope="scope">
 					<el-button-group>
-						<el-button type="primary" size="mini" plain @click="openModel(scope)">修改</el-button>
+						<el-button type="primary" size="mini" plain @click="openModel(scope.row)">修改</el-button>
 						<el-button type="danger" size="mini" plain @click="deleteItem(scope.row)">删除</el-button>
 					</el-button-group>
 				</template>
 			</el-table-column>
 		</el-table>
 		
+		<el-footer class="border-top d-flex align-items-center px-0 position-fixed bg-white"
+		style="bottom: 0;left: 200px;right: 0;z-index: 100;">
+			<div class="block px-2">
+				<el-pagination
+					@size-change="handleSizeChange"
+					@current-change="handleCurrentChange"
+					:current-page="page.current"
+					:page-sizes="page.sizes"
+					:page-size="page.limit"
+					:total="page.total"
+					layout="total, sizes, prev, pager, next, jumper">
+				</el-pagination>
+			</div>
+		</el-footer>
+		
 		<!-- 新增/修改模态框 -->
-		<el-dialog width="50%" title="添加分类" :visible.sync="createModel" top="5vh">
+		<el-dialog width="50%" :title="isedit? '修改分类':'添加分类'" 
+		:visible.sync="createModel" top="5vh">
 			<!-- 表单内容 -->
 			<el-form :rules="rules" ref="form" :model="form" label-width="80px">
 				<el-form-item label="分类名称" prop="name">
@@ -37,7 +57,7 @@
 					</el-input>
 				</el-form-item>
 				<el-form-item label="排序">
-					<el-input-number size="mini" v-model="form.order" :min="0"></el-input-number>
+					<el-input-number size="mini" v-model="form.sort" :min="0"></el-input-number>
 				</el-form-item>
 				<el-form-item label="状态">
 					<el-radio-group v-model="form.status" size="mini">
@@ -54,7 +74,7 @@
 	</div>
 </template>
 <script>
-import {mapState,mapMutations} from 'vuex'
+import {mapMutations} from 'vuex'
 import buttonSearch from '@/components/common/button-search.vue';
 import common from '@/common/mixins/common.js';
 export default {
@@ -65,7 +85,8 @@ export default {
 	},
 	data() {
 		return {
-			currentPage: 1,
+			preUrl:"product/category",
+			isedit:true,
 			createModel: false,
 			editIndex: -1,
 			rules: {
@@ -77,60 +98,80 @@ export default {
 				]
 			},
 			form:{
+				id:0,
 				name:'',
-				isedit:false,
-				order:0,
+				sort:0,
 				status:1
-			}
+			},
+			tableData:[]
 		};
 	},
 	computed: {
-		...mapState({
-			categories:state=>state.category.categories
-			
-		})
+		
 	},
 	methods: {
 		...mapMutations([
-			'addCategory',
-			'deleteCategory',
-			'changeCategory'
+			'updateCategories'
 		]),
-		// 改变分类状态
-		changeStatus(row){
-			row.status = !row.status
-			this.changeCategory('status',row)
+		getListUrl(){
+			return `/admin/${this.preUrl}/${this.page.current}?limit=${this.page.limit}&order=asc`
+		},
+		//处理列表结果
+		getListResult(data){
+			//console.log(JSON.stringify(data.list))
+			this.tableData = data.list.map(item=>{
+				return {
+					id:item.id,
+					name:item.name,
+					num:item.num,
+					status:item.status,
+					sort:item.sort
+				}
+			})
+			
+			let item =  this.tableData.filter(v=>{
+				return v.status === 1
+			})
+			console.log(JSON.stringify(item))
+			this.updateCategories(item)
+			
 		},
 		// 打开模态框
-		openModel(e = false) {
+		openModel(row = false) {
 			// 增加
-			if (!e) {
+			if (!row) {
+				this.isedit = false
 				this.form = {
 					name:'',
-					isedit:false,
-					order:10,
+					sort:0,
 					status:1
 				}
-				this.editIndex = -1
 			} else {
-				this.form = e.row
-				this.editIndex = e.$index
+				this.isedit = true
+				this.form = {
+					id:row.id,
+					name:row.name,
+					sort:row.sort,
+					status:row.status
+				}
 			}
 			this.createModel = true;
 		},
 		// 添加类型
 		submit() {
-			console.log(this.form)
-		},
-		// 编辑属性
-		editItem(row) {
-			row.isedit = !row.isedit
-			this.changeCategory('isedit',row)
-		},
-		// 删除属性值
-		deleteItem(row) {
-			this.deleteCategory(row)
+			this.$refs.form.validate(res=>{
+				if(res) {
+					let id = 0
+					if(this.isedit){
+						id = this.form.id
+					}
+					this.addOrEdit(this.form,id)
+					this.createModel = false
+				}
+			})
+			
 		}
+		
 	}
 }
 </script>

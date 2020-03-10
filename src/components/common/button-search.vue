@@ -9,7 +9,7 @@
 			<el-button type="danger" size="mini">批量删除</el-button>
 			-->
 			<!-- 右边 -->
-			<div class="ml-auto">
+			<div class="ml-auto" v-show="!superSearchModel">
 				
 				<slot name="right">
 					<el-input v-model="keyword" size="mini" style="width: 200px;" 

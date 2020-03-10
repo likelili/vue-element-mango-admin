@@ -194,12 +194,6 @@
 				}
 				return `/admin/admin/imageclass/${this.imageClassId}/image/${this.currentPage}
 				?limit=${this.pageSize}&order=${this.searchForm.order}${other}`
-			},
-			isHaveNextAlbumPage(){
-				if(this.albumPage<this.albumsPages){
-					return true
-				}
-				return false
 			}
 		},
 		methods:{
